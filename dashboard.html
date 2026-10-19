@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>실시간 침해 탐지 · LogGuard</title>
+<style>
+:root{--bg:#0F141A;--surface:#1A2129;--ink:#E6EBF0;--muted:#8B99A7;--rule:#2A333D;
+--accent:#7FB0DC;--high:#F0564B;--mid:#F2A65A;--low:#6FBF95;--ok:#6FBF95;
+font-variant-numeric:tabular-nums}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+font:15px/1.55 "Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif}
+header{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;padding:18px 24px;border-bottom:1px solid var(--rule)}
+h1{font-size:18px;margin:0;letter-spacing:-.01em}
+.live{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+main{max-width:1100px;margin:0 auto;padding:22px 24px 60px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:22px}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:14px 16px}
+.card .n{font-size:30px;font-weight:700;line-height:1.1}
+.card .l{font-size:12.5px;color:var(--muted);margin-top:2px}
+.card.high{border-color:var(--high)}.card.high .n{color:var(--high)}
+.card.mid .n{color:var(--mid)}.card.low .n{color:var(--low)}
+.card.broken{border-color:var(--high)}.card.broken .n{color:var(--high);font-size:20px;padding-top:8px}
+.card.sealed .n{color:var(--ok);font-size:20px;padding-top:8px}
+h2{font-size:14px;color:var(--muted);font-weight:600;margin:24px 0 10px;letter-spacing:.02em}
+.inc{background:var(--surface);border:1px solid var(--rule);border-left:4px solid var(--low);
+border-radius:7px;padding:12px 15px;margin-bottom:9px}
+.inc.high{border-left-color:var(--high)}.inc.mid{border-left-color:var(--mid)}
+.inc .top{display:flex;align-items:center;gap:10px}
+.badge{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+font-weight:700;font-size:13px;color:#06121c;background:var(--low)}
+.inc.high .badge{background:var(--high)}.inc.mid .badge{background:var(--mid)}
+.inc .who{font-weight:600}.inc .meta{font-size:12.5px;color:var(--muted);margin-left:auto}
+.path{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.path span{font-size:12px;padding:2px 8px;border:1px solid var(--rule);border-radius:20px;color:var(--muted)}
+.path span::before{content:"";display:inline-block;width:4px;height:4px;border-radius:50%;
+background:var(--accent);margin-right:6px;vertical-align:2px}
+.feed{display:flex;flex-direction:column;gap:6px}
+.row{display:flex;align-items:flex-start;gap:10px;background:var(--surface);border:1px solid var(--rule);
+border-radius:6px;padding:9px 12px;font-size:13.5px}
+.row.flash{animation:flash 1.4s ease-out}
+@keyframes flash{0%{background:#33201e;border-color:var(--high)}100%{}}
+.g{flex:none;font-weight:700;width:20px;text-align:center}
+.g.high{color:var(--high)}.g.mid{color:var(--mid)}.g.low{color:var(--low)}
+.row code{font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--accent)}
+.row .d{flex:1}.row .t{color:var(--muted);font-size:12px;white-space:nowrap}
+.empty{color:var(--muted);padding:18px;text-align:center;border:1px dashed var(--rule);border-radius:8px}
+footer{color:var(--muted);font-size:12px;margin-top:28px;text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <h1>실시간 침해 탐지</h1>
+  <span class="live"><span class="dot"></span><span id="clock">연결 중…</span></span>
+  <span class="live" style="margin-left:auto">로그 <b id="total" style="color:var(--ink)">0</b>건 · 규칙 tuned</span>
+</header>
+<main>
+  <div class="cards">
+    <div class="card high"><div class="n" id="c-high">0</div><div class="l">상 등급 사건</div></div>
+    <div class="card mid"><div class="n" id="c-mid">0</div><div class="l">중 등급 사건</div></div>
+    <div class="card low"><div class="n" id="c-low">0</div><div class="l">하 등급 사건</div></div>
+    <div class="card sealed" id="int-card"><div class="n" id="int">확인 중</div><div class="l">로그 무결성</div></div>
+  </div>
+
+  <h2>진행 중인 사건</h2>
+  <div id="incidents"><div class="empty">아직 탐지된 사건이 없습니다. 공격 스크립트를 실행해 보세요.</div></div>
+
+  <h2>경보 피드 (최신순)</h2>
+  <div class="feed" id="feed"><div class="empty">경보 없음</div></div>
+
+  <footer>2초마다 자동 갱신 · 이 대시보드는 로컬 연습 서버의 로그만 봅니다</footer>
+</main>
+
+<script>
+const GC = {"상":"high","중":"mid","하":"low"};
+let seen = new Set();          // 이미 표시한 경보 id (새 경보 깜빡임용)
+let first = true;
+
+async function tick(){
+  let s;
+  try{ s = await (await fetch("/api/state")).json(); }
+  catch(e){ document.getElementById("clock").textContent = "서버 연결 끊김"; return; }
+
+  document.getElementById("clock").textContent = "실시간 · " + s.now.replace("T"," ");
+  document.getElementById("total").textContent = s.total_logs.toLocaleString();
+  document.getElementById("c-high").textContent = s.counts["상"];
+  document.getElementById("c-mid").textContent = s.counts["중"];
+  document.getElementById("c-low").textContent = s.counts["하"];
+
+  const ic = document.getElementById("int-card"), it = document.getElementById("int");
+  if(s.integrity === "broken"){ ic.className = "card broken"; it.textContent = "변조 "+s.integrity_breaks+"곳"; }
+  else if(s.integrity === "ok"){ ic.className = "card sealed"; it.textContent = "정상"; }
+  else { ic.className = "card"; it.textContent = "체인 없음"; }
+
+  // 사건
+  const inc = document.getElementById("incidents");
+  if(!s.incidents.length){ inc.innerHTML = '<div class="empty">아직 탐지된 사건이 없습니다. 공격 스크립트를 실행해 보세요.</div>'; }
+  else inc.innerHTML = s.incidents.map(i => `
+    <div class="inc ${GC[i.grade]}">
+      <div class="top"><span class="badge">${i.grade}</span>
+        <span class="who">${esc(i.users.join(", ")||"계정 미상")}${(i.ips || []).length ? " · " + esc(i.ips.join(", ")) : ""}</span>
+        <span class="meta">${i.incident_id} · 점수 ${i.score} · 관련 로그 ${i.timeline_len}건</span></div>
+      <div class="path">${i.stages.map(st=>`<span>${esc(st)}</span>`).join("")}</div>
+    </div>`).join("");
+
+  // 경보 피드
+  const feed = document.getElementById("feed");
+  if(!s.alerts.length){ feed.innerHTML = '<div class="empty">경보 없음</div>'; }
+  else feed.innerHTML = s.alerts.map(a => {
+    const isNew = !first && !seen.has(a.id);
+    const ipText = (a.ips || []).join(", ");
+    const user = (a.users || [])[0] || "";
+    const detail = String(a.detail || "");
+    // `emp20: 경보 내용` -> `emp20 (192.168.0.4): 경보 내용`
+    const shownDetail = user && detail.startsWith(user + ":")
+      ? esc(user) + (ipText ? " (" + esc(ipText) + ")" : "") + esc(detail.slice(user.length))
+      : esc(detail) + (ipText ? " (" + esc(ipText) + ")" : "");
+    return `<div class="row ${isNew?"flash":""}">
+      <span class="g ${GC[a.grade]}">${a.grade}</span>
+      <span class="d"><code>${esc(a.rule_id)}</code> ${shownDetail}</span>
+      <span class="t">${a.last_ts? a.last_ts.slice(11,19):""}</span></div>`;
+  }).join("");
+  seen = new Set(s.alerts.map(a=>a.id));
+  first = false;
+}
+function esc(x){ return (x==null?"":String(x)).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+tick(); setInterval(tick, 2000);
+</script>
+</body>
+</html>
