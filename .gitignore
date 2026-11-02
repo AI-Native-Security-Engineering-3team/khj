@@ -218,3 +218,24 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# SentinelHub: keep secrets, runtime data and large binaries out of the repo
+*.pyc
+.venv/
+*.db
+*.sqlite
+*.sqlite3
+*.jsonl
+*.key
+*.pem
+rootCA*
+*.crt
+*.weights
+*.pt
+*.onnx
+security-events*
+web-threat-events*
+*.mp4
+*.avi
+node_modules/
+.DS_Store

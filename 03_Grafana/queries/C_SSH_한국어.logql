@@ -1,0 +1,4 @@
+{job="sentinelhub-ssh"}
+|~ "^(Accepted|Failed) password for "
+| regexp `^(?P<result>Accepted|Failed) password for (?P<username>\S+) from (?P<client_ip>\S+) port (?P<port>\d+)`
+| line_format `{{ if eq .result "Accepted" }}[SSH] 인증 성공{{ else }}[SSH] 인증 실패{{ end }} | 계정: {{.username}} | 접속 IP: {{.client_ip}} | 포트: {{.port}}`

@@ -1,0 +1,48 @@
+--- main.py (2026-10-29 base)
++++ main.py (2026-10-30 web threat)
+@@ -18,6 +18,7 @@
+ from fastapi import FastAPI, HTTPException, Request, Response
+ from fastapi.responses import FileResponse, JSONResponse
+ from pydantic import BaseModel, Field
++from web_threat_detector import WebThreatDetector
+ 
+ BASE = Path(__file__).resolve().parent
+ DATA = BASE / "data"
+@@ -32,6 +33,8 @@
+ # For internal HTTP testing only. Set SENTINELHUB_SECURE_COOKIES=1 after HTTPS is configured.
+ SECURE_COOKIES = os.environ.get("SENTINELHUB_SECURE_COOKIES", "0") == "1"
+ password_hasher = PasswordHasher()
++# Independent audit trail; does not modify existing authentication events.
++threat_detector = WebThreatDetector("/var/log/sentinelhub/web-threat-events.jsonl")
+ 
+ 
+ def connect_db():
+@@ -128,6 +131,19 @@
+     response.headers["X-Frame-Options"] = "DENY"
+     if request.url.path.startswith("/api/"):
+         response.headers["Cache-Control"] = "no-store"
++    # Observe only after the normal response is produced; NEVER read the body.
++    # Detection failures must not affect HTTP results or authentication.
++    try:
++        threat_detector.observe(
++            client_ip=client_ip(request),
++            method=request.method,
++            path=request.url.path,
++            query_string=request.scope.get("query_string", b""),
++            http_status=response.status_code,
++            username=getattr(request.state, "threat_username", None),
++        )
++    except Exception:
++        pass  # The detector independently emits rate-limited diagnostics.
+     return response
+ 
+ 
+@@ -170,6 +186,8 @@
+     now = int(time.time())
+     username = payload.username.strip().lower()
+     ip = client_ip(request)
++    # Only this validated, already-parsed field is passed to the detector.
++    request.state.threat_username = username
+     if not username or len(username) > 32:
+         raise HTTPException(status_code=400, detail="아이디 형식을 확인하세요.")
+ 

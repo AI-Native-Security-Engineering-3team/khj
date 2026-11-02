@@ -1,0 +1,7 @@
+zone "sentinelhub.com" {
+    type primary;
+    file "/etc/bind/db.sentinelhub.com";
+
+    allow-update { none; };
+    allow-transfer { none; };
+};

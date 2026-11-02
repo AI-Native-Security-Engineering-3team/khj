@@ -1,0 +1,18 @@
+// 신규 블록만 별도로 보존한 참고 파일입니다.
+// 전체 config.alloy에 이미 적용되어 있다면 다시 추가하지 마세요.
+loki.source.file "sentinelhub_web_threat" {
+  targets = [
+    {
+      "__path__" = "/var/log/sentinelhub/web-threat-events.jsonl",
+      "job" = "sentinelhub-web-threat",
+    },
+  ]
+  forward_to = [loki.write.sentinelhub_web_threat.receiver]
+  tail_from_end = false
+}
+
+loki.write "sentinelhub_web_threat" {
+  endpoint {
+    url = "http://127.0.0.1:3100/loki/api/v1/push"
+  }
+}

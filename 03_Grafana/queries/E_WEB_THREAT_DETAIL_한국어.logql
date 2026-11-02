@@ -1,0 +1,3 @@
+{job="sentinelhub-web-threat"}
+| json
+| line_format "[웹 공격 징후] {{.reason}} | IP={{.client_ip}} | 요청={{.method}} | HTTP={{.http_status}} | 위험도={{.severity}}"

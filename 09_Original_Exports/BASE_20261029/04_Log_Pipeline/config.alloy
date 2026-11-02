@@ -1,0 +1,146 @@
+// Sample config for Alloy.
+//
+// For a full configuration reference, see https://grafana.com/docs/alloy
+logging {
+  level = "warn"
+}
+
+prometheus.exporter.unix "default" {
+  include_exporter_metrics = true
+  disable_collectors       = ["mdadm"]
+}
+
+prometheus.scrape "default" {
+  targets = array.concat(
+    prometheus.exporter.unix.default.targets,
+    [{
+      // Self-collect metrics
+      job         = "alloy",
+      __address__ = "127.0.0.1:12345",
+    }],
+  )
+
+  forward_to = [
+  // TODO: components to forward metrics to (like prometheus.remote_write or
+  // prometheus.relabel).
+  ]
+}
+
+// 1. FastAPI 보안 로그 파일 읽기
+loki.source.file "sentinelhub_auth" {
+  targets = [
+    {
+      __path__ = "/var/log/sentinelhub/security-events.jsonl",
+      job      = "sentinelhub-auth",
+      service  = "sentinelhub-login",
+      host     = "kali-vm",
+    },
+  ]
+
+  tail_from_end = true
+  forward_to   = [loki.process.sentinelhub_auth.receiver]
+}
+
+// 2. JSON 로그의 발생 시각과 이벤트 종류 처리
+loki.process "sentinelhub_auth" {
+  stage.json {
+    expressions = {
+      ts    = "timestamp",
+      event = "event",
+    }
+  }
+
+  stage.timestamp {
+    source = "ts"
+    format = "RFC3339Nano"
+  }
+
+  stage.labels {
+    values = {
+      event = "",
+    }
+  }
+
+  forward_to = [loki.write.sentinelhub_local.receiver]
+}
+
+// 3. 같은 Kali Linux의 Loki로 전송
+loki.write "sentinelhub_local" {
+  endpoint {
+    url = "http://127.0.0.1:3100/loki/api/v1/push"
+  }
+}
+// Nginx: SentinelHub 웹사이트 접속 로그 수집
+loki.source.file "sentinelhub_web" {
+  targets = [
+    {
+      __path__ = "/var/log/nginx/sentinelhub-access.log",
+      job      = "sentinelhub-web",
+      service  = "sentinelhub-web",
+      host     = "kali-vm",
+    },
+  ]
+
+  tail_from_end = true
+  forward_to   = [loki.process.sentinelhub_web.receiver]
+}
+
+// 접속 로그에 기록된 실제 요청 시각 적용
+loki.process "sentinelhub_web" {
+  stage.regex {
+    expression = "^\\S+ \\S+ \\S+ \\[(?P<time_local>[^\\]]+)\\]"
+  }
+
+  stage.timestamp {
+    source            = "time_local"
+    format            = "02/Jan/2006:15:04:05 -0700"
+    action_on_failure = "skip"
+  }
+
+  forward_to = [loki.write.sentinelhub_local.receiver]
+}
+
+ // SSH: SentinelHub SSH 인증 로그 수집
+loki.source.journal "sentinelhub_ssh" {
+  matches = "_SYSTEMD_UNIT=ssh.service"
+  max_age = "24h"
+
+  labels = {
+    job     = "sentinelhub-ssh",
+    service = "ssh",
+    host    = "kali-vm",
+  }
+
+  forward_to = [loki.write.sentinelhub_local.receiver]
+}
+
+// SentinelHub Fail2Ban 차단 및 해제 로그 수집
+loki.source.file "sentinelhub_fail2ban" {
+  targets = [
+    {
+      __path__ = "/var/log/fail2ban.log",
+      job      = "sentinelhub-fail2ban",
+      service  = "fail2ban",
+      host     = "kali-vm",
+    },
+  ]
+
+  tail_from_end = false
+  forward_to = [loki.process.sentinelhub_fail2ban.receiver]
+}
+
+// Fail2Ban 실제 이벤트 발생 시각 처리
+loki.process "sentinelhub_fail2ban" {
+  stage.regex {
+    expression = "^(?P<event_time>\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3})"
+  }
+
+  stage.timestamp {
+    source            = "event_time"
+    format            = "2006-01-02 15:04:05,000"
+    location          = "Asia/Seoul"
+    action_on_failure = "skip"
+  }
+
+  forward_to = [loki.write.sentinelhub_local.receiver]
+}

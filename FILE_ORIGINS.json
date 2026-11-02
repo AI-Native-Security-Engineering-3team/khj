@@ -1,0 +1,351 @@
+{
+  "format": "SentinelHub integrated source provenance 2026-10-31",
+  "generated_date": "2026-10-31",
+  "source_zip": "SentinelHub_소스코드.zip",
+  "source_zip_sha256": "0c649d3ebeea013631ae71b07eeed87298f2e65f9981ea31e397671b687c83cb",
+  "note": "Team CCTV excerpts remain byte-identical. Reconstructed Grafana queries and Alloy source are not dashboard/config exports.",
+  "files": [
+    {
+      "path": "01_FastAPI_Login/README.md",
+      "sha256": "f21f85482b8541396e8579467bb523d72a829140eb43d124a4c0f1a23f133ae9",
+      "size_bytes": 2885,
+      "provenance": "NEW_DOC_20261031"
+    },
+    {
+      "path": "01_FastAPI_Login/create_user.py",
+      "sha256": "6a8503a1fd02f749227c176656ca4a1d446d921e7ea95aee2480d783b3476917",
+      "size_bytes": 2042,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "01_FastAPI_Login/main.py",
+      "sha256": "9833ce1c3e825740a8570d0d7955e3fd3859241194694913d8e36a1b4f09ffcd",
+      "size_bytes": 9936,
+      "provenance": "SESSION_VERIFIED_20261030_UPDATED_MAIN"
+    },
+    {
+      "path": "01_FastAPI_Login/requirements.txt",
+      "sha256": "a10825f52f227f973f225da1a7f7e447dc71e06a2081eb56b73532e824474b2f",
+      "size_bytes": 61,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "01_FastAPI_Login/sentinelhub-manager.sh",
+      "sha256": "efa3eadec09dbc3549498e106854683fcc6cfaa8d32de7af3b1c022966d8afe1",
+      "size_bytes": 7063,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "01_FastAPI_Login/tests/README.md",
+      "sha256": "ea64d87ba4b3724633e66cb12f8e65b56e6645cdc0ca2d12a9089bd7a1d24ad7",
+      "size_bytes": 526,
+      "provenance": "NEW_DOC_20261031"
+    },
+    {
+      "path": "01_FastAPI_Login/tests/test_detector.py",
+      "sha256": "60ae15e36df623bdcca7851f870bcc1bca7980da6fd608a4b443ac635a9c6835",
+      "size_bytes": 8021,
+      "provenance": "SESSION_TEST_ADAPTED_20261031"
+    },
+    {
+      "path": "01_FastAPI_Login/web/index.html",
+      "sha256": "50634cdf06178d4a4f1c33c8a00204fe7b24a1b7107f37e5e27825eee24c47c2",
+      "size_bytes": 17519,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "01_FastAPI_Login/web_threat_detector.py",
+      "sha256": "a7f9d8b756ce195f169bb9aa442adf0b277c732d9a5be386cbccb9e67395c063",
+      "size_bytes": 11563,
+      "provenance": "SESSION_VERIFIED_20261030_DETECTOR"
+    },
+    {
+      "path": "02_CCTV_YOLO/01_fastapi_code.py",
+      "sha256": "b19b39fb5b7441886fa673e3a5cef80dd034967b5a071a1937c46d082b6bfb6a",
+      "size_bytes": 4945,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "02_CCTV_YOLO/02_yolo_code.py",
+      "sha256": "12520043956973fecfee3f627296facaee7ec9fcab6704dde90e2809228e6dac",
+      "size_bytes": 1218,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "02_CCTV_YOLO/README.md",
+      "sha256": "5b219b541591b2304fce00c4f3c7f455477813635d448e36af354752508dbaaf",
+      "size_bytes": 6742,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "03_Grafana/PANEL_OPTIONS_20261031.md",
+      "sha256": "fe8d46e21aa461c77bb36f27cef2b4bf8e59a213b4cd5bdc48a1dafc98420755",
+      "size_bytes": 3196,
+      "provenance": "NEW_DOC_20261031"
+    },
+    {
+      "path": "03_Grafana/alert_rule_annotations_reference.md",
+      "sha256": "1e65faa85d91a8aea497ff1a7b1096149470263a015ef90ff6bf442e4f4dccc2",
+      "size_bytes": 1588,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "03_Grafana/dashboard_export_steps.md",
+      "sha256": "4141658f278a694531c4d286d835eecc1588c71ab962d01b3aacb4e69837877a",
+      "size_bytes": 1104,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "03_Grafana/queries/A_WEB_한국어.logql",
+      "sha256": "850d6dd2b719082074e1c2068e87bdb2e3ea3107e494cd0d2df9013a91904940",
+      "size_bytes": 1039,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "03_Grafana/queries/B_AUTH_한국어.logql",
+      "sha256": "2d7bfb4e7c4a62c6d11dc8fda8a447ddc5576b7404d916a4eaf109bb1b974727",
+      "size_bytes": 532,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "03_Grafana/queries/CPU_usage_percent.promql",
+      "sha256": "a28d4e0fa24f4f8275f9ff48286e29023f9549e7df41455b5631561e8264be47",
+      "size_bytes": 115,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "03_Grafana/queries/C_SSH_한국어.logql",
+      "sha256": "136d97d430d8378d7cdf44d309ef9c27395a41b9511e463c0e99c9052f37f71f",
+      "size_bytes": 352,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "03_Grafana/queries/D_FAIL2BAN_한국어.logql",
+      "sha256": "f4641a06d7e6a8a2b2d8c738ee9041cb3cd2a6a85e1928f6bef65c76cd042f49",
+      "size_bytes": 343,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "03_Grafana/queries/E_WEB_THREAT_DETAIL_한국어.logql",
+      "sha256": "08873856a4c1efdcf0e5ae93f2d2b0ac165a1c46d45699f9c1206c7e3b48a28c",
+      "size_bytes": 177,
+      "provenance": "CONVERSATION_CONFIRMED_QUERY_TEXT"
+    },
+    {
+      "path": "03_Grafana/queries/FAIL_IP_10m_WEB_SSH.logql",
+      "sha256": "48c3dc16c0993f4bd9139e56435fd8f08c8f50cc17e1138746a6e196b7c3be41",
+      "size_bytes": 374,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "03_Grafana/queries/Network_download_Mbps.promql",
+      "sha256": "9bb6379757d6a1d6461e4735e3761cf2906d5a6b3e1d307a761ec7a84f297a61",
+      "size_bytes": 103,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "03_Grafana/queries/Network_upload_Mbps.promql",
+      "sha256": "0f67f0df3889232ac79a54ab96a8058310b1ff32229545799425f4b40574aad0",
+      "size_bytes": 104,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "03_Grafana/queries/RAM_total_bytes.promql",
+      "sha256": "74d3ac84ddb85ea8d2ae44d2f9497fc066f2f6b6e26d85eb0ea541e758a78157",
+      "size_bytes": 65,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "03_Grafana/queries/RAM_used_bytes.promql",
+      "sha256": "d8934205fe7f19426b85e1ac081031674bc97dd2daf2ab1516c00b472070ed49",
+      "size_bytes": 136,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "03_Grafana/queries/README.md",
+      "sha256": "958bc9a97acf8c4c224b2148a081970bd1dff536a668f55cd8d910515b8a8b02",
+      "size_bytes": 1021,
+      "provenance": "NEW_DOC_20261031"
+    },
+    {
+      "path": "03_Grafana/queries/SSH_FAILED_24h.logql",
+      "sha256": "870b24c901d5041759e21d583aa7460ee4cf3c8dce8c459516884b7669fc46c4",
+      "size_bytes": 148,
+      "provenance": "CONVERSATION_CONFIRMED_QUERY_TEXT"
+    },
+    {
+      "path": "03_Grafana/queries/WEB_LOGIN_FAILED_10m.logql",
+      "sha256": "bc2433befbdc0d9ac96dd386b0af5449b43fa3b00b76c15784b7be933cdd8979",
+      "size_bytes": 144,
+      "provenance": "CONVERSATION_CONFIRMED_QUERY_TEXT"
+    },
+    {
+      "path": "03_Grafana/queries/WEB_THREAT_BY_EVENT_24h.logql",
+      "sha256": "1148ceba61d720b528857910eb58ac38f4b4615f15a516f7b90ca1174aad8063",
+      "size_bytes": 117,
+      "provenance": "CONVERSATION_CONFIRMED_QUERY_TEXT"
+    },
+    {
+      "path": "03_Grafana/queries/WEB_THREAT_SHORT_한국어.logql",
+      "sha256": "bb47a930d58d348b80cec306bfe248af9e6d9ebf7927124bff49b7a80146c620",
+      "size_bytes": 130,
+      "provenance": "CONVERSATION_CONFIRMED_QUERY_TEXT"
+    },
+    {
+      "path": "04_Log_Pipeline/README.md",
+      "sha256": "c68abc6c9a0dbecefae5c0d78690818725fe43971f35f2b33c97c1ea523369b0",
+      "size_bytes": 1052,
+      "provenance": "NEW_DOC_20261031"
+    },
+    {
+      "path": "04_Log_Pipeline/WEB_THREAT_ONLY.alloy",
+      "sha256": "ff3964256d178947855e4a56f63f508a56b5c95ffeb765776753a029c84beb4c",
+      "size_bytes": 528,
+      "provenance": "SESSION_RECONSTRUCTED_ALLOY_SNIPPET"
+    },
+    {
+      "path": "04_Log_Pipeline/config.alloy",
+      "sha256": "1576fb3dd97ac3355a1ceabec5d2ffba59840cd4f27b826ff7f72a5a42f2fea9",
+      "size_bytes": 3987,
+      "provenance": "UPLOADED_BASE_PLUS_20261030_ALLOY_BLOCK"
+    },
+    {
+      "path": "05_Server_Configs/README.md",
+      "sha256": "3b92b3b73595246202650f11c586e61a38df991f4a59127d9bdfc1fcd49c26c6",
+      "size_bytes": 894,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "05_Server_Configs/bind9/db.sentinelhub.com",
+      "sha256": "058caafe11f3742cd102d16d06a6c350267c6a92b95df07da651c58bd5744b05",
+      "size_bytes": 274,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "05_Server_Configs/bind9/named.conf.local",
+      "sha256": "093a05afa84eb382284fb98dff2c372f98ab476f065ffa08d0ed26566de58868",
+      "size_bytes": 146,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "05_Server_Configs/bind9/named.conf.options",
+      "sha256": "fd0ea8dc5c038652511c67fd583bc53937a3e7d9601254975589cb5541f77957",
+      "size_bytes": 444,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "05_Server_Configs/nginx/default",
+      "sha256": "472ccab7430bb4b26a8ca11a3fb3f275522e9b2dcf864a1e2171cbbaa93ff348",
+      "size_bytes": 1211,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "05_Server_Configs/prometheus.yml",
+      "sha256": "77fd6641861e7c5d59ec4ba2695dcaa4e58938807047978fee9fdeaae62c96f7",
+      "size_bytes": 1430,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "06_Fail2Ban/99-sentinelhub.local",
+      "sha256": "4445aa1baadde357b462757ffc70b251c05b9651d617976f5d5c1a9fc0d06676",
+      "size_bytes": 61,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "06_Fail2Ban/README.md",
+      "sha256": "d501bbbcc2e49b09182d8ec6c796cb71a896d178680f33ee06669eec46fab92b",
+      "size_bytes": 667,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "06_Fail2Ban/sentinelhub-fail2ban-manager.sh",
+      "sha256": "978bd3234c87d1ea3aed9d1d6ddc1b4a01f42338f6f9aa7b770ab3d9c761e0c0",
+      "size_bytes": 12458,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "07_Scripts/README.md",
+      "sha256": "2732a1a3bf70cc47387187c68255bc62a88771dc9ab1935de44e34f049505c43",
+      "size_bytes": 866,
+      "provenance": "NEW_DOC_20261031"
+    },
+    {
+      "path": "07_Scripts/SentinelHub_Attack_Demo.bat",
+      "sha256": "e8e4f9782607fc22299611a0bdaaf4864882c9154ffa89fbd64600961ba27259",
+      "size_bytes": 4294,
+      "provenance": "SESSION_VERIFIED_DEMO_BAT_CP949_CRLF"
+    },
+    {
+      "path": "07_Scripts/SentinelHub_Attack_Demo_README.txt",
+      "sha256": "5faa21bda16ad691399fd4215749014ca789afc362d6669be4519660900d7d23",
+      "size_bytes": 2962,
+      "provenance": "SESSION_DEMO_INSTRUCTIONS"
+    },
+    {
+      "path": "07_Scripts/collect_sentinelhub_sources.py",
+      "sha256": "5bb87a0e61981b7d39546a97764faae42cd5f2e2a2133cea1c3317606ced1e45",
+      "size_bytes": 8275,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "08_Documents/CHANGELOG_20261030_31.md",
+      "sha256": "e780ac852d53261ed0598f73685a0097cc1c5969304e91f220567f8d3e67c2fe",
+      "size_bytes": 2168,
+      "provenance": "NEW_DOC_20261031"
+    },
+    {
+      "path": "08_Documents/architecture.md",
+      "sha256": "41db70ecddd7b6905e5d2a29b56462e88911791ab923fd831afb358901fde418",
+      "size_bytes": 1233,
+      "provenance": "NEW_DOC_20261031"
+    },
+    {
+      "path": "08_Documents/verification_matrix.md",
+      "sha256": "e4a317027923049c18d66633719e0e21913b5207b6bdca76f50548916cf946e3",
+      "size_bytes": 1988,
+      "provenance": "NEW_DOC_20261031"
+    },
+    {
+      "path": "09_Original_Exports/BASE_20261029/01_FastAPI_Login/main.py",
+      "sha256": "f1f4a26081b51463e7a116a2e5c26a650c69529a87bd6582eaf15b2a2a877db0",
+      "size_bytes": 9013,
+      "provenance": "SNAPSHOT_FROM_UPLOADED_ZIP"
+    },
+    {
+      "path": "09_Original_Exports/BASE_20261029/04_Log_Pipeline/config.alloy",
+      "sha256": "1fa7e0ef152d058df2583434fbb11ea3f3b9a89148271266d1f463c6f908b2b2",
+      "size_bytes": 3318,
+      "provenance": "SNAPSHOT_FROM_UPLOADED_ZIP"
+    },
+    {
+      "path": "09_Original_Exports/BASE_20261029/main_to_20261030.patch",
+      "sha256": "e22407e6eb3631a6337a4ba59258312a036b0adfd6a42a7249fc49f9479abd5a",
+      "size_bytes": 1959,
+      "provenance": "GENERATED_DIFF"
+    },
+    {
+      "path": "09_Original_Exports/PLACE_ORIGINAL_EXPORTS_HERE.md",
+      "sha256": "75d960daa3136a2ec8182fbfb14fbbc9f31027041f259bcdddb88359e1945597",
+      "size_bytes": 411,
+      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
+    },
+    {
+      "path": "README.md",
+      "sha256": "3bb901be116469dce08baa5146399aa7fc471300e082a92395c7c559e206116e",
+      "size_bytes": 2895,
+      "provenance": "NEW_DOC_20261031"
+    },
+    {
+      "path": "SOURCE_STATUS.md",
+      "sha256": "954d483f0c8cc03549c8165215fa2d4b2d91c5892e58a46be6cc575ced03ac13",
+      "size_bytes": 1896,
+      "provenance": "NEW_DOC_20261031"
+    },
+    {
+      "path": "SUBMISSION_CHECKLIST.md",
+      "sha256": "dd0b58d27c3e20da935bf5a9eae15f908fe7348f5f558fda4cc14633f2e569a6",
+      "size_bytes": 1275,
+      "provenance": "NEW_DOC_20261031"
+    }
+  ]
+}

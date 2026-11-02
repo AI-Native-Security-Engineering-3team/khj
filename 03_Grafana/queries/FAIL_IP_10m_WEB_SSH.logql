@@ -1,0 +1,16 @@
+sum by (client_ip) (
+  count_over_time(
+    {job="sentinelhub-auth", event="LOGIN_FAILED"}
+    | json client_ip="client_ip"
+    | __error__=""
+    [10m]
+  )
+  or
+  count_over_time(
+    {job="sentinelhub-ssh"}
+    |= "Failed password"
+    | regexp `^Failed password for (?:invalid user )?(?P<username>\S+) from (?P<client_ip>\S+) port \d+`
+    | __error__=""
+    [10m]
+  )
+)

@@ -1,0 +1,8 @@
+sum by (event) (
+  count_over_time(
+    {job="sentinelhub-ssh"}
+    |= "Failed password"
+    | label_format event="SSH_AUTH_FAILED"
+    [24h]
+  )
+)

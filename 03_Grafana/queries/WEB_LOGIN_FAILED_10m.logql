@@ -1,0 +1,9 @@
+sum(
+  count_over_time(
+    {job="sentinelhub-auth"}
+    | json
+    | event="LOGIN_FAILED"
+    | __error__=""
+    [10m]
+  )
+) or on() vector(0)

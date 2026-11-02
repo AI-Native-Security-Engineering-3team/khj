@@ -1,0 +1,1 @@
+100 * (1 - avg(irate(node_cpu_seconds_total{job="node",instance="127.0.0.1:9100",mode="idle"}[$__rate_interval])))

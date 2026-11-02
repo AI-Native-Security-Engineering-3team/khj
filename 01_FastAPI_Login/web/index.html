@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>센티넬 | 보안 로그인 실습</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&amp;family=Rajdhani:wght@500;600;700&amp;display=swap">
+<style>
+body{margin:0;background:#0E1B3A}
+a{color:#7FD4E6;text-decoration:none}a:hover{color:#B5ECF7;text-decoration:underline}
+.home button{font-family:inherit;cursor:pointer}
+.home button:focus-visible,.home input:focus-visible,.home a:focus-visible{outline:2px solid #F2B84B;outline-offset:2px}
+.home input::placeholder{color:#6B7A90}
+.gear{transform-box:fill-box;transform-origin:center}
+.gear-cw{animation:sentinel-cw 8s linear infinite}
+.gear-ccw{animation:sentinel-ccw 4.8s linear infinite}
+.gear-bg{animation:sentinel-cw 60s linear infinite}
+.gear-bg2{animation:sentinel-ccw 36s linear infinite}
+@keyframes sentinel-cw{to{transform:rotate(360deg)}}
+@keyframes sentinel-ccw{to{transform:rotate(-360deg)}}
+@media (prefers-reduced-motion: reduce){.gear-cw,.gear-ccw,.gear-bg,.gear-bg2{animation:none}}
+</style>
+<style>#screen{min-height:100vh}</style>
+<style>
+[hidden] { display: none !important; }
+@media (max-width: 720px) {
+  .home header { padding: 14px 18px !important; }
+  .home main { padding: 36px 18px 60px !important; }
+  .home main h1 { font-size: 34px !important; }
+  .home section[aria-label="로그인"] { flex: 1 1 100% !important; }
+  .home section[aria-label="공지사항"] { flex: 1 1 100% !important; }
+}
+</style>
+</head>
+<body>
+<div id="screen">
+
+<div class="home" style="position: relative; width: 100%; min-height: 760px; overflow: hidden; font-family: 'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', system-ui, sans-serif; color: #E6EDF5; background: #0E1B3A">
+
+<!-- 배경: 노을 진 하늘과 톱니 요새 -->
+<svg style="position: absolute; inset: 0; width: 100%; height: 100%" viewBox="0 0 1440 760" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#0E1B3A"></stop>
+<stop offset="0.5" stop-color="#2A3C6E"></stop>
+<stop offset="0.78" stop-color="#7C5577"></stop>
+<stop offset="1" stop-color="#E38B52"></stop>
+</linearGradient>
+</defs>
+<rect width="1440" height="760" fill="url(#sky)"></rect>
+<g fill="#FFFFFF">
+<circle cx="120" cy="140" r="1.5" opacity="0.7"></circle><circle cx="260" cy="90" r="1" opacity="0.6"></circle><circle cx="420" cy="170" r="1.5" opacity="0.5"></circle><circle cx="610" cy="120" r="1" opacity="0.7"></circle><circle cx="880" cy="100" r="1.5" opacity="0.6"></circle><circle cx="1040" cy="160" r="1" opacity="0.5"></circle><circle cx="1220" cy="110" r="1.5" opacity="0.7"></circle><circle cx="1360" cy="190" r="1" opacity="0.6"></circle><circle cx="760" cy="200" r="1" opacity="0.4"></circle><circle cx="330" cy="230" r="1" opacity="0.4"></circle>
+</g>
+<circle cx="720" cy="640" r="170" fill="#F6C177" opacity="0.28"></circle>
+<circle cx="720" cy="640" r="95" fill="#F8D29A" opacity="0.35"></circle>
+<path d="M0 600 L140 520 L260 570 L400 480 L540 560 L660 510 L800 570 L940 490 L1080 560 L1220 500 L1440 580 L1440 760 L0 760 Z" fill="#3A3F6A" opacity="0.85"></path>
+<g fill="#1E2340">
+<rect x="1080" y="420" width="70" height="240"></rect>
+<rect x="1150" y="470" width="120" height="190"></rect>
+<rect x="1010" y="500" width="70" height="160"></rect>
+<path d="M1080 420 L1115 380 L1150 420 Z"></path>
+<rect x="1100" y="440" width="10" height="16" fill="#F2B84B" opacity="0.8"></rect>
+<rect x="1180" y="500" width="10" height="16" fill="#F2B84B" opacity="0.8"></rect>
+<rect x="1220" y="520" width="10" height="16" fill="#F2B84B" opacity="0.6"></rect>
+</g>
+<g class="gear gear-bg">
+<circle cx="1210" cy="420" r="62" fill="none" stroke="#1E2340" stroke-width="22" stroke-dasharray="16.2 16.2"></circle>
+<circle cx="1210" cy="420" r="50" fill="none" stroke="#1E2340" stroke-width="8"></circle>
+<circle cx="1210" cy="420" r="14" fill="#1E2340"></circle>
+</g>
+<g class="gear gear-bg2">
+<circle cx="1296" cy="356" r="30" fill="none" stroke="#1E2340" stroke-width="14" stroke-dasharray="9.4 9.4"></circle>
+<circle cx="1296" cy="356" r="8" fill="#1E2340"></circle>
+</g>
+<path d="M0 660 L180 620 L360 650 L560 610 L760 650 L980 615 L1200 650 L1440 620 L1440 760 L0 760 Z" fill="#141A30"></path>
+<rect width="1440" height="760" fill="#0B0F17" opacity="0.25"></rect>
+</svg>
+
+<!-- 헤더: 로고 + 메뉴 왼쪽 -->
+<header style="position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 40px; padding: 16px 40px; background: rgba(11,15,23,0.72); border-bottom: 1px solid rgba(127,212,230,0.18)">
+<a href="#" aria-label="센티넬 홈" style="display: flex; align-items: center; gap: 12px; color: #E6EDF5; text-decoration: none">
+<svg width="60" height="52" viewBox="0 0 60 52" aria-hidden="true">
+<g class="gear gear-cw">
+<circle cx="24" cy="26" r="19" fill="none" stroke="#4FC3DC" stroke-width="7" stroke-dasharray="7.46 7.46"></circle>
+<circle cx="24" cy="26" r="15" fill="#0F1520" stroke="#4FC3DC" stroke-width="2.5"></circle>
+</g>
+<g class="gear gear-ccw">
+<circle cx="49" cy="12" r="8" fill="none" stroke="#F2B84B" stroke-width="5" stroke-dasharray="4.19 4.19"></circle>
+<circle cx="49" cy="12" r="5" fill="#0F1520" stroke="#F2B84B" stroke-width="2"></circle>
+</g>
+<path d="M14 26 Q24 17 34 26 Q24 35 14 26 Z" fill="none" stroke="#E6EDF5" stroke-width="2"></path>
+<circle cx="24" cy="26" r="3.5" fill="#4FC3DC"></circle>
+</svg>
+<span style="display: flex; flex-direction: column; line-height: 1">
+<span style="font-size: 26px; font-weight: 900; letter-spacing: 0.04em">센티넬</span>
+<span style="margin-top: 4px; font-family: Rajdhani, sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.42em; color: #4FC3DC">SENTINEL</span>
+</span>
+</a>
+<nav aria-label="주 메뉴" style="display: flex; flex-wrap: wrap; gap: 4px; flex: 1 1 auto">
+<a href="#" style="padding: 12px 14px; font-size: 14px; font-weight: 500; color: #E6EDF5">새소식</a>
+<a href="#" style="padding: 12px 14px; font-size: 14px; font-weight: 500; color: #E6EDF5">게임 가이드</a>
+<a href="#" style="padding: 12px 14px; font-size: 14px; font-weight: 500; color: #E6EDF5">랭킹</a>
+<a href="#" style="padding: 12px 14px; font-size: 14px; font-weight: 500; color: #E6EDF5">커뮤니티</a>
+<a href="#" style="padding: 12px 14px; font-size: 14px; font-weight: 500; color: #E6EDF5">고객센터</a>
+</nav>
+<a href="#" style="display: flex; align-items: center; height: 44px; padding: 0 20px; border-radius: 8px; border: 1px solid #4FC3DC; color: #4FC3DC; font-size: 14px; font-weight: 700; background: rgba(11,15,23,0.5)">게임 다운로드</a>
+</header>
+
+<main style="position: relative; max-width: 1440px; margin: 0 auto; padding: 48px 40px 64px; box-sizing: border-box; display: flex; flex-direction: column; gap: 40px">
+
+<!-- 슬로건: 한 줄, 가운데 -->
+<section style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px">
+<div style="font-family: Rajdhani, sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.3em; color: #F2B84B">SECURITY LAB // SEASON 01</div>
+<h1 style="margin: 0; font-size: 48px; font-weight: 900; line-height: 1.2; text-shadow: 0 2px 12px rgba(6,10,20,0.6)">SENTINEL: SECURITY ARENA</h1>
+<p style="margin: 0; max-width: 640px; font-size: 16px; line-height: 1.7; color: #DCE4EF">게임 스타일로 구성한 보안 학습 포털입니다. 로그인 이벤트와 이상 접근을 기록하여 관제 시스템에서 분석합니다.</p>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 6px">
+<a href="#login-panel" style="display: flex; align-items: center; height: 52px; padding: 0 28px; border-radius: 10px; background: #4FC3DC; color: #06131A; font-size: 16px; font-weight: 700">로그인하기</a>
+<a href="#notices" style="display: flex; align-items: center; height: 52px; padding: 0 28px; border-radius: 10px; border: 1px solid rgba(230,237,245,0.5); background: rgba(11,15,23,0.4); color: #E6EDF5; font-size: 16px; font-weight: 500">보안 실습 안내</a>
+</div>
+</section>
+
+<!-- 공지(왼쪽) · 가운데 비움 · 로그인(오른쪽) -->
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 32px">
+
+<section id="notices" aria-label="공지사항" style="flex: 0 1 360px; padding: 20px; box-sizing: border-box; background: rgba(15,21,32,0.88); border: 1px solid #2A3548; border-radius: 14px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: center">
+<h2 style="margin: 0; font-size: 17px; font-weight: 700">공지사항</h2>
+<a href="#" style="font-size: 13px">더보기</a>
+</div>
+<a href="#notices" style="display: flex; align-items: center; gap: 10px; padding: 10px 0; border-top: 1px solid #222C3C; color: #E6EDF5; text-decoration: none"><span style="flex-shrink: 0; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; color: #4FC3DC; border: 1px solid #4FC3DC">공지</span><span style="flex: 1; min-width: 0; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">로그인 이벤트 모니터링 실습 안내</span><span style="font-family: Rajdhani, sans-serif; font-weight: 600; font-size: 13px; color: #A9B6C8">10.23</span></a>
+<a href="#notices" style="display: flex; align-items: center; gap: 10px; padding: 10px 0; border-top: 1px solid #222C3C; color: #E6EDF5; text-decoration: none"><span style="flex-shrink: 0; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; color: #6FD39B; border: 1px solid #6FD39B">업데이트</span><span style="flex: 1; min-width: 0; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">내부 BIND9 DNS 설정 완료</span><span style="font-family: Rajdhani, sans-serif; font-weight: 600; font-size: 13px; color: #A9B6C8">10.23</span></a>
+<a href="#notices" style="display: flex; align-items: center; gap: 10px; padding: 10px 0; border-top: 1px solid #222C3C; color: #E6EDF5; text-decoration: none"><span style="flex-shrink: 0; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; color: #F2B84B; border: 1px solid #F2B84B">이벤트</span><span style="flex: 1; min-width: 0; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">반복 로그인 실패 탐지 테스트</span><span style="font-family: Rajdhani, sans-serif; font-weight: 600; font-size: 13px; color: #A9B6C8">10.23</span></a>
+<a href="#notices" style="display: flex; align-items: center; gap: 10px; padding: 10px 0; border-top: 1px solid #222C3C; color: #E6EDF5; text-decoration: none"><span style="flex-shrink: 0; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; color: #F08A8D; border: 1px solid #F08A8D">점검</span><span style="flex: 1; min-width: 0; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">내부 교육망 한정 이용 안내</span><span style="font-family: Rajdhani, sans-serif; font-weight: 600; font-size: 13px; color: #A9B6C8">10.23</span></a>
+</section>
+
+<section id="login-panel" aria-label="로그인" style="flex: 0 1 300px; padding: 20px; box-sizing: border-box; background: rgba(15,21,32,0.95); border: 1px solid #2A3548; border-radius: 12px; display: flex; flex-direction: column; gap: 12px">
+<h2 id="login-heading" style="margin: 0; font-size: 17px; font-weight: 700">로그인</h2>
+<form id="login-form" style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="login-id" style="font-size: 13px; color: #C3CEDC">아이디</label>
+<input id="login-id" name="id" type="text" required minlength="3" maxlength="32" autocomplete="username" placeholder="아이디를 입력하세요" style="height: 44px; padding: 0 14px; box-sizing: border-box; background: #18222F; border: 1px solid #2A3548; border-radius: 8px; color: #E6EDF5; font-family: inherit; font-size: 14px">
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<label for="login-pw" style="font-size: 13px; color: #C3CEDC">비밀번호</label>
+<div style="position: relative">
+<input id="login-pw" name="password" type="password" required maxlength="256" autocomplete="current-password" placeholder="비밀번호를 입력하세요" style="width: 100%; height: 44px; padding: 0 52px 0 14px; box-sizing: border-box; background: #18222F; border: 1px solid #2A3548; border-radius: 8px; color: #E6EDF5; font-family: inherit; font-size: 14px">
+<button type="button" id="toggle-password" aria-label="비밀번호 보기" aria-pressed="false" style="position: absolute; right: 0; top: 0; width: 44px; height: 44px; border: 0; background: transparent; color: #A9B6C8; display: flex; align-items: center; justify-content: center">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+</button>
+</div>
+</div>
+<label style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #C3CEDC; min-height: 24px">
+<input id="remember-login" type="checkbox" style="width: 18px; height: 18px; accent-color: #4FC3DC">
+로그인 상태 유지
+</label>
+<button id="submit-login" type="submit" style="height: 44px; border: 0; border-radius: 8px; background: #4FC3DC; color: #06131A; font-size: 15px; font-weight: 700">로그인</button>
+</form>
+<div id="login-message" hidden role="status" aria-live="polite" style="font-size: 12px; color: #6FD39B; line-height: 1.6"></div>
+<div id="session-panel" hidden style="display: flex; flex-direction: column; gap: 14px; color: #DCE4EF; font-size: 14px">
+  <div>접속 계정: <strong id="current-user" style="color:#4FC3DC"></strong></div>
+  <div style="font-size:12px; color:#A9B6C8">정상적인 로그인 이벤트가 보안 로그에 기록되었습니다.</div>
+  <button id="logout-button" type="button" style="height: 44px; border: 1px solid #4FC3DC; border-radius: 8px; color: #4FC3DC; background: rgba(11,15,23,.5); font-size: 14px; font-weight: 700">로그아웃</button>
+</div>
+<div style="text-align:center; font-size:12px; color:#A9B6C8">학습용 계정은 관리자에게 발급받으세요.</div>
+</section>
+
+
+</div>
+</main>
+</div>
+
+</div>
+
+<script>
+(() => {
+  'use strict';
+  const form = document.getElementById('login-form');
+  const feedback = document.getElementById('login-message');
+  const panel = document.getElementById('session-panel');
+  const title = document.getElementById('login-heading');
+  const usernameLabel = document.getElementById('current-user');
+  const submit = document.getElementById('submit-login');
+  const pwInput = document.getElementById('login-pw');
+  const toggle = document.getElementById('toggle-password');
+  function showMessage(message, error = false) {
+    feedback.textContent = message;
+    feedback.style.color = error ? '#F08A8D' : '#6FD39B';
+    feedback.hidden = !message;
+  }
+  function showUser(user) {
+    const loggedIn = Boolean(user);
+    form.hidden = loggedIn;
+    panel.hidden = !loggedIn;
+    title.textContent = loggedIn ? '로그인 완료' : '로그인';
+    usernameLabel.textContent = user || '';
+  }
+  async function api(path, options = {}) {
+    const response = await fetch(path, {
+      credentials: 'same-origin',
+      cache: 'no-store',
+      headers: {'Content-Type':'application/json', ...(options.headers || {})},
+      ...options
+    });
+    let result = {};
+    try { result = await response.json(); } catch (_) { /* 빈 응답 처리 */ }
+    if (!response.ok) throw new Error(typeof result.detail === 'string' ? result.detail : '요청 처리 중 오류가 발생했습니다.');
+    return result;
+  }
+  toggle.addEventListener('click', () => {
+    const visible = pwInput.type === 'password';
+    pwInput.type = visible ? 'text' : 'password';
+    toggle.setAttribute('aria-label', visible ? '비밀번호 숨기기' : '비밀번호 보기');
+    toggle.setAttribute('aria-pressed', String(visible));
+  });
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    submit.disabled = true;
+    showMessage('로그인 확인 중...');
+    try {
+      const user = document.getElementById('login-id').value.trim();
+      const body = {
+        username: user,
+        password: pwInput.value,
+        remember: document.getElementById('remember-login').checked
+      };
+      const result = await api('/api/login', { method: 'POST', body: JSON.stringify(body) });
+      pwInput.value = '';
+      showUser(result.username);
+      showMessage('로그인에 성공했습니다.');
+    } catch (error) {
+      showMessage(error.message, true);
+      pwInput.value = '';
+    } finally {
+      submit.disabled = false;
+    }
+  });
+  document.getElementById('logout-button').addEventListener('click', async () => {
+    try {
+      await api('/api/logout', {method: 'POST', body: '{}'});
+      showUser(null);
+      showMessage('로그아웃했습니다.');
+    } catch (error) { showMessage(error.message, true); }
+  });
+  (async () => {
+    try {
+      const result = await api('/api/session');
+      showUser(result.authenticated ? result.username : null);
+    } catch (_) { showUser(null); }
+  })();
+})();
+</script>
+</body>
+</html>

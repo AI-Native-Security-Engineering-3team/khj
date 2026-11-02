@@ -1,0 +1,1 @@
+sum(irate(node_network_receive_bytes_total{job="node",device="eth0"}[$__rate_interval])) * 8 / 1000000
