@@ -3,7 +3,7 @@
   "generated_date": "2026-10-31",
   "source_zip": "SentinelHub_소스코드.zip",
   "source_zip_sha256": "0c649d3ebeea013631ae71b07eeed87298f2e65f9981ea31e397671b687c83cb",
-  "note": "Team CCTV excerpts remain byte-identical. Reconstructed Grafana queries and Alloy source are not dashboard/config exports.",
+  "note": "Team CCTV code is kept byte-identical to the original.",
   "files": [
     {
       "path": "01_FastAPI_Login/README.md",
@@ -324,27 +324,21 @@
       "provenance": "GENERATED_DIFF"
     },
     {
-      "path": "09_Original_Exports/PLACE_ORIGINAL_EXPORTS_HERE.md",
-      "sha256": "75d960daa3136a2ec8182fbfb14fbbc9f31027041f259bcdddb88359e1945597",
-      "size_bytes": 411,
-      "provenance": "UNCHANGED_FROM_USER_UPLOADED_ZIP"
-    },
-    {
       "path": "README.md",
-      "sha256": "3bb901be116469dce08baa5146399aa7fc471300e082a92395c7c559e206116e",
-      "size_bytes": 2895,
+      "sha256": "73a1d595f509690c773d34782af2fccba1cf9a0fa05facfdf9a8b7e982c23d00",
+      "size_bytes": 2308,
       "provenance": "NEW_DOC_20261031"
     },
     {
       "path": "SOURCE_STATUS.md",
-      "sha256": "954d483f0c8cc03549c8165215fa2d4b2d91c5892e58a46be6cc575ced03ac13",
-      "size_bytes": 1896,
+      "sha256": "a254337cd92582decf3b789914e98dc9d623b0cd9b51bac273717cec4489ceaf",
+      "size_bytes": 1014,
       "provenance": "NEW_DOC_20261031"
     },
     {
       "path": "SUBMISSION_CHECKLIST.md",
-      "sha256": "dd0b58d27c3e20da935bf5a9eae15f908fe7348f5f558fda4cc14633f2e569a6",
-      "size_bytes": 1275,
+      "sha256": "4ed81bbd1b1f4a8ac89b6c65e85ea04440cdfe29af0795a86861afdf8738717c",
+      "size_bytes": 843,
       "provenance": "NEW_DOC_20261031"
     }
   ]
